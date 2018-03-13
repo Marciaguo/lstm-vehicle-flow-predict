@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="30 minutes">
+
+    <property name="logback.home" value="/home/hdfs/ud-jtt"/>
+    <property name="logback.appName" value="ud-jtt"/>
+    <property name="logback.debug" value="debug"/>
+    <property name="logback.info" value="info"/>
+    <property name="logback.err" value="err"/>
+    <property name="logback.warn" value="warn"/>
+    <property name="logback.importance" value="importance"/>
+
+    <property name="logback.warnFileName" value="jtt_warn"/>
+    <property name="logback.infoFileName" value="jtt_info"/>
+    <property name="logback.errFileName" value="jtt_err"/>
+    <property name="logback.importanceFileName" value="jtt_importance"/>
+    <property name="logback.debugFileName" value="jtt_debug"/>
+
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [${logback.appName}:%thread] %c [%L] -| %msg%n" />
+    <!--
+        设置上下文名称后,可以方便地区分来自不同应用程序的记录
+    -->
+    <contextName>${logback.appName}</contextName>
+
+    <!-- name 属性指定 appender 的名称,class 属性指定 appender 类的全限定名 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="union_warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.warn}/${logback.warnFileName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.warn}/${logback.warnFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="union_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.info}/${logback.infoFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.info}/${logback.infoFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="union_debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.debug}/${logback.debugFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.debug}/${logback.debugFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="union_err" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.err}/${logback.errFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.err}/${logback.errFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="org_err" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.info}/${logback.infoFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.info}/${logback.infoFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="org_warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logback.home}/${logback.info}/${logback.infoFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logback.home}/${logback.info}/${logback.infoFileName}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <logger name="com.udgrp" level="info" additivity="true">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="union_info"/>
+        <appender-ref ref="union_warn"/>
+        <appender-ref ref="union_debug"/>
+        <appender-ref ref="union_err"/>
+    </logger>
+
+    <logger name="org.deeplearning4j.optimize.listeners.ScoreIterationListener" level="info" additivity="true">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="union_info"/>
+        <appender-ref ref="union_warn"/>
+        <appender-ref ref="union_debug"/>
+        <appender-ref ref="union_err"/>
+    </logger>
+
+    <logger name="org" level="error" additivity="true">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="union_info"/>
+        <appender-ref ref="union_warn"/>
+        <appender-ref ref="union_debug"/>
+        <appender-ref ref="union_err"/>
+    </logger>
+
+</configuration>
