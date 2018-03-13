@@ -16,7 +16,8 @@
     <property name="logback.importanceFileName" value="jtt_importance"/>
     <property name="logback.debugFileName" value="jtt_debug"/>
 
-    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [${logback.appName}:%thread] %c [%L] -| %msg%n" />
+    <property name="PATTERN"
+              value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [${logback.appName}:%thread] %c [%L] -| %msg%n"/>
     <!--
         设置上下文名称后,可以方便地区分来自不同应用程序的记录
     -->
@@ -161,6 +162,13 @@
     </logger>
 
     <logger name="org.deeplearning4j.optimize.listeners.ScoreIterationListener" level="info" additivity="true">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="union_info"/>
+        <appender-ref ref="union_warn"/>
+        <appender-ref ref="union_debug"/>
+        <appender-ref ref="union_err"/>
+    </logger>
+    <logger name="org.deeplearning4j.ui.play.PlayUIServer" level="info" additivity="true">
         <!--<appender-ref ref="CONSOLE"/>-->
         <appender-ref ref="union_info"/>
         <appender-ref ref="union_warn"/>
