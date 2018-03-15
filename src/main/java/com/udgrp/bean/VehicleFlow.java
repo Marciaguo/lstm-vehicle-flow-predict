@@ -11,10 +11,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class VehicleFlow implements Comparable<VehicleFlow> {
 
+    //站点
     private String stationId;
+    //日期
     private String date;
+    //进出口
     private String inOutType;
+    //小时
     private int hour;
+    //车流量
     private double flow;
 
     public VehicleFlow() {
@@ -24,7 +29,7 @@ public class VehicleFlow implements Comparable<VehicleFlow> {
         this.flow = flow;
     }
 
-    public VehicleFlow(String inOutType,String stationId, String date, int hour, double flow) {
+    public VehicleFlow(String inOutType, String stationId, String date, int hour, double flow) {
         this.inOutType = inOutType;
         this.stationId = stationId;
         this.date = date;

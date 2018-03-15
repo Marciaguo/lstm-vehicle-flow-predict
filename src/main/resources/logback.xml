@@ -3,7 +3,7 @@
 <configuration scan="true" scanPeriod="30 minutes">
 
     <property name="logback.home" value="/home/hdfs/ud-jtt"/>
-    <property name="logback.appName" value="ud-jtt"/>
+    <property name="logback.appName" value="ud-vehicle-flow-predict"/>
     <property name="logback.debug" value="debug"/>
     <property name="logback.info" value="info"/>
     <property name="logback.err" value="err"/>

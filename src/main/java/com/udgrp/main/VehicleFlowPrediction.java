@@ -4,6 +4,7 @@ import com.udgrp.network.LstmNetworks;
 import com.udgrp.bean.VehicleFlow;
 import com.udgrp.iterator.VehicleFlowSetIterator;
 import com.udgrp.utils.DBUtil;
+import com.udgrp.utils.DateUtil;
 import com.udgrp.utils.PlotUtil;
 import javafx.util.Pair;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
@@ -34,28 +35,27 @@ public class VehicleFlowPrediction {
     private static MultiLayerNetwork net;
     private static VehicleFlowSetIterator iterator;
 
-    private static int epochs = 120; // training epochs
-    private static int miniBatchSize = 32;// mini-batch size
+    private static int epochs = 500; // training epochs
+    private static int miniBatchSize = 64;// mini-batch size
     private static int exampleLength = 24; // time series length, assume 22 working days per month
     private static int predictLength = 24; //  default 1, say, one day ahead prediction
-    private static int printIterations = 5; // frequency with which to print scores
+    private static int printIterations = 100; // frequency with which to print scores
 
     public static void main(String[] args) throws IOException {
-        String[] inout = {"0", "1"};
-        List<String[]> list = DBUtil.getStationIds();
+        String[] inout = {"0"};
+        List<String[]> list = DBUtil.getStationIdLists();
         for (String inoutType : inout) {
             for (String[] arr : list) {
                 //模型训练阶段
                 initPreTrain(inoutType, arr[0]);
-                trainModel();
-                //testModel();
+                //trainModel();
+                testModel();
 
                 //预测数据阶段
                 //initPrePredict(inoutType, arr[0]);
                 //predict();
             }
         }
-
     }
 
     /**
@@ -117,18 +117,19 @@ public class VehicleFlowPrediction {
 
         INDArray arrs = net.rnnTimeStep(predictData.get(0).getKey());
         INDArray arr = arrs.getColumn(exampleLength - predictLength);
+
+        if (arr.length() != 24) {
+            return;
+        }
         // System.out.println(arrs);
         // System.out.println(arr);
         double[] predicts = new double[arr.length()];
         for (int i = 0; i < arr.length(); i++) {
             predicts[i] = arr.getDouble(i) * (max - min) + min;
             VehicleFlow flow = lastDayDataList.get(i);
+            flow.setDate(DateUtil.getAfterDay(flow.getDate()));
             flow.setFlow(predicts[i]);
             DBUtil.insert(flow);
-        }
-        //PlotUtil.plot(predicts, String.valueOf("predict"));
-        //double predicts = arr.getDouble(exampleLength - 24) * (max - min) + min;
-        for (int i = 0; i < predicts.length; i++) {
             log.info(predicts[i] + "");
         }
     }
@@ -140,12 +141,12 @@ public class VehicleFlowPrediction {
      * @return
      */
     private static void initPreTrain(String inoutType, String stationId) {
+        log.info("Create dataSet iterator...");
+        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
+
         log.info("Create model path...");
         String path = "src/main/resources/model/" + stationId + "_" + inoutType + "_model.zip";
         modelPath = new File(path);
-
-        log.info("Create dataSet iterator...");
-        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
 
         log.info("Build lstm networks...");
         net = LstmNetworks.buildLstmNetworks(iterator.inputColumns(), iterator.totalOutcomes());

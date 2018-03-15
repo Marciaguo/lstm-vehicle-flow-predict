@@ -37,8 +37,8 @@ public class VehicleFlowPredictionUI {
     private static MultiLayerNetwork net;
     private static VehicleFlowSetIterator iterator;
 
-    private static int epochs = 120; // training epochs
-    private static int miniBatchSize = 1;// mini-batch size
+    private static int epochs = 180; // training epochs
+    private static int miniBatchSize = 64;// mini-batch size
     private static int exampleLength = 24; // time series length, assume 22 working days per month
     private static int predictLength = 24; // default 1, say, one day ahead prediction
     private static int listenerFrequency = 1;  //
@@ -102,12 +102,12 @@ public class VehicleFlowPredictionUI {
      * @param stationId
      */
     private static void initialize(String inoutType, String stationId) {
+        log.info("Create dataSet iterator...");
+        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
+
         log.info("Create model path...");
         String path = "src/main/resources/model/" + stationId + "_" + inoutType + "_model.zip";
         modelPath = FileUtil.createFile(path);
-
-        log.info("Create dataSet iterator...");
-        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
 
         log.info("Build lstm networks...");
         net = LstmNetworks.buildLstmNetworks(iterator.inputColumns(), iterator.totalOutcomes());

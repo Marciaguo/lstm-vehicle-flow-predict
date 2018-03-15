@@ -1,3 +1,5 @@
+import com.udgrp.utils.DateUtil;
+
 import java.util.UUID;
 
 /**
@@ -20,5 +22,7 @@ public class TestID {
         System.out.println(a);
         a = "bbb";
         System.out.println(a);
+
+        System.out.println(DateUtil.getAfterDay("2018-02-28"));
     }
 }

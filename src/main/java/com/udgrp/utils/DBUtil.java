@@ -123,6 +123,44 @@ public class DBUtil {
         return list;
     }
 
+    public static List<String[]> getStationIdLists() {
+        List<String[]> list = new ArrayList<>();
+        String[] a = {"4412-110-3"};
+        String[] b = {"4412-114-13"};
+        String[] d = {"4412-12-19"};
+        String[] e = {"4412-120-1"};
+        String[] f = {"4412-121-1"};
+        String[] g = {"4412-129-1"};
+        String[] h = {"4412-51-3"};
+        String[] i = {"4412-64-19"};
+        String[] j = {"4412-72-31"};
+        String[] k = {"4412-73-5"};
+        String[] l = {"4412-74-25"};
+        String[] m = {"4412-78-11"};
+        String[] n = {"4412-85-11"};
+        String[] o = {"4412-85-21"};
+        String[] p = {"4412-90-29"};
+        String[] q = {"4412-90-3"};
+        list.add(a);
+        list.add(b);
+        list.add(d);
+        list.add(e);
+        list.add(f);
+        list.add(g);
+        list.add(h);
+        list.add(i);
+        list.add(j);
+        list.add(k);
+        list.add(l);
+        list.add(m);
+        list.add(n);
+        list.add(o);
+        list.add(p);
+        list.add(q);
+
+        return list;
+    }
+
     public static List<String[]> getLastDayData(String inoutType, String stationId) {
         int paraCount = 4; //读取参数数量
         String sql = "";
