@@ -35,7 +35,7 @@ public class VehicleFlowPrediction {
     private static MultiLayerNetwork net;
     private static VehicleFlowSetIterator iterator;
 
-    private static int epochs = 500; // training epochs
+    private static int epochs = 1000; // training epochs
     private static int miniBatchSize = 64;// mini-batch size
     private static int exampleLength = 24; // time series length, assume 22 working days per month
     private static int predictLength = 24; //  default 1, say, one day ahead prediction
