@@ -7,7 +7,6 @@
   initPreTrain(inoutType, arr[0]);
   trainModel();
   testModel();
-  
 预测阶段：
 //预测数据阶段
   initPrePredict(inoutType, arr[0]);
