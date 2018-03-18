@@ -42,13 +42,13 @@ public class VehicleFlowPrediction {
     private static int printIterations = 100; // frequency with which to print scores
 
     public static void main(String[] args) throws IOException {
-        String[] inout = {"0"};
+        String[] inout = {"1"};
         List<String[]> list = DBUtil.getStationIdLists();
         for (String inoutType : inout) {
             for (String[] arr : list) {
                 //模型训练阶段
                 initPreTrain(inoutType, arr[0]);
-                //trainModel();
+                trainModel();
                 testModel();
 
                 //预测数据阶段

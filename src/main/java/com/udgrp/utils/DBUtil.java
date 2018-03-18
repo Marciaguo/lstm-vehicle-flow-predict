@@ -30,17 +30,17 @@ public class DBUtil {
             if ("train".equals(type)) {
                 sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' AND in_out_type = '1' GROUP BY date,hour ORDER BY date,`hour`";
             } else if ("test".equals(type)) {
-                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '1' and date in ('2018-03-08','2018-03-09','2018-03-10','2018-03-11') GROUP BY date,hour ORDER BY date,`hour`";
+                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict_test where station_id = '" + stationId + "' and in_out_type = '1' GROUP BY date,hour ORDER BY date,`hour`";
             } else {
-                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '1' and date ='2018-03-11' GROUP BY date,hour ORDER BY date,`hour`";
+                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '1' and date ='2018-03-10' GROUP BY date,hour ORDER BY date,`hour`";
             }
         } else {
             if ("train".equals(type)) {
                 sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' AND in_out_type = '0' GROUP BY date,hour ORDER BY date,`hour`";
             } else if ("test".equals(type)) {
-                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '1' and date in ('2018-03-08','2018-03-09','2018-03-10','2018-03-11') GROUP BY date,hour ORDER BY date,`hour`";
+                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict_test where station_id = '" + stationId + "' and in_out_type = '0' GROUP BY date,hour ORDER BY date,`hour`";
             } else {
-                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '0' and date = '2018-03-11' GROUP BY date,hour ORDER BY date,`hour`";
+                sql = "select station_id,date,hour,count from t_vehicle_in_out_count_for_predict where station_id = '" + stationId + "' and in_out_type = '0' and date = '2018-03-10' GROUP BY date,hour ORDER BY date,`hour`";
             }
         }
 
@@ -123,41 +123,11 @@ public class DBUtil {
         return list;
     }
 
+    //程序写死便于测试
     public static List<String[]> getStationIdLists() {
         List<String[]> list = new ArrayList<>();
-        String[] a = {"4412-110-3"};
-        String[] b = {"4412-114-13"};
-        String[] d = {"4412-12-19"};
-        String[] e = {"4412-120-1"};
-        String[] f = {"4412-121-1"};
-        String[] g = {"4412-129-1"};
-        String[] h = {"4412-51-3"};
-        String[] i = {"4412-64-19"};
-        String[] j = {"4412-72-31"};
-        String[] k = {"4412-73-5"};
-        String[] l = {"4412-74-25"};
-        String[] m = {"4412-78-11"};
-        String[] n = {"4412-85-11"};
-        String[] o = {"4412-85-21"};
-        String[] p = {"4412-90-29"};
-        String[] q = {"4412-90-3"};
+        String[] a = {"4412-132-21"};
         list.add(a);
-        list.add(b);
-        list.add(d);
-        list.add(e);
-        list.add(f);
-        list.add(g);
-        list.add(h);
-        list.add(i);
-        list.add(j);
-        list.add(k);
-        list.add(l);
-        list.add(m);
-        list.add(n);
-        list.add(o);
-        list.add(p);
-        list.add(q);
-
         return list;
     }
 

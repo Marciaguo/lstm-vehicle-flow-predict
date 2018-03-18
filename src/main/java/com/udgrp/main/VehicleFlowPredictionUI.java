@@ -44,7 +44,7 @@ public class VehicleFlowPredictionUI {
     private static int listenerFrequency = 1;  //
 
     private static String inoutType = "1";  //
-    private static String stationId = "4412-90-29";  //
+    private static String stationId = "4412-132-21";  //
 
     public static void main(String[] args) throws IOException {
         uiServer = UIServer.getInstance();
