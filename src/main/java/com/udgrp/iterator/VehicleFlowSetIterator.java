@@ -273,7 +273,7 @@ public class VehicleFlowSetIterator implements DataSetIterator {
         HashMap params = new HashMap<String, String>();
         params.put("in_out_type", in_out_type);//出入口
         params.put("highway", highway);//高速公路名字
-        params.put("date", "2018-03-11"); //此处为前一天，用作预测下一天参数
+        params.put("date", "2018-03-11"); //此处为当天，用作预测下一天参数
         List<VehicleFlow> list = DBUtil.readData(params, type);
 
         for (VehicleFlow bean : list) {

@@ -10,8 +10,8 @@ CREATE TABLE `t_vehicle_highway_flow_predict_byhour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `t_vehicle_in_out_count_real`;
-CREATE TABLE `t_vehicle_in_out_count_real` (
+DROP TABLE IF EXISTS `t_vehicle_highway_flow_real_byhour`;
+CREATE TABLE `t_vehicle_highway_flow_real_byhour` (
   `id` varchar(32) NOT NULL,
   `date` date DEFAULT NULL,
   `highway` varchar(50) DEFAULT NULL,
@@ -21,29 +21,29 @@ CREATE TABLE `t_vehicle_in_out_count_real` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('49ca9623f8f77fa30698699ef18f1b18', '2018-03-11', '汕汾高速', '1', '7', '158');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('67e623b14af8ccc410fd25a62ffe524a', '2018-03-11', '汕汾高速', '1', '0', '153');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('4d01bf57a510c5a4881585f5c1d5fab3', '2018-03-11', '汕汾高速', '1', '22', '160');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('13498ab565370c1486b0de994f40e777', '2018-03-11', '汕汾高速', '1', '23', '158');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('50d2d4e1316d4cd2aee58be70bf0213d', '2018-03-11', '汕汾高速', '1', '19', '178');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('18d9144b695f3b912fab67cfd35667f8', '2018-03-11', '汕汾高速', '1', '18', '173');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('f228cd26c8f9e639eef04df56cbdb20f', '2018-03-11', '汕汾高速', '1', '8', '178');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('20d61220beac2219a579c4aaeb8824c2', '2018-03-11', '汕汾高速', '1', '1', '156');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('315c8405a0c5bc5c2bc1cfdd9223603d', '2018-03-11', '汕汾高速', '1', '2', '160');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('71ffde668129a434c24d61de3066680d', '2018-03-11', '汕汾高速', '1', '12', '196');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('40367007695d87f0863a1f8b92b22651', '2018-03-11', '汕汾高速', '1', '6', '150');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('42243740928745b19074dfe3eed94e84', '2018-03-11', '汕汾高速', '1', '14', '235');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('9ca5099e76d63d00eb4d9e3cd1734c2b', '2018-03-11', '汕汾高速', '1', '11', '217');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('9ec490037f921adf57cd922816151fb5', '2018-03-11', '汕汾高速', '1', '5', '143');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('a927744e8eb32e2bae8b59beffe38fad', '2018-03-11', '汕汾高速', '1', '21', '175');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('bb243d622909c8f60d6f0fa79d67b0d6', '2018-03-11', '汕汾高速', '1', '3', '145');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('bd5015c7cd977ec29172cb05438d23e3', '2018-03-11', '汕汾高速', '1', '4', '142');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('be1f13c0a11537cf58204f7709872aeb', '2018-03-11', '汕汾高速', '1', '9', '221');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('c450c5a4242712ba65280f6ae1134a57', '2018-03-11', '汕汾高速', '1', '13', '212');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('d17dd97b5e0e8004ecb43c76405add88', '2018-03-11', '汕汾高速', '1', '16', '213');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('d953c555f4484cdf25f3b44190554f79', '2018-03-11', '汕汾高速', '1', '20', '172');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('e2f38e33f54fffef9f75ab23c343b8d2', '2018-03-11', '汕汾高速', '1', '15', '231');
-INSERT INTO `t_vehicle_in_out_count_real` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('eca54616da39bf2099c447f6c5b76a0a', '2018-03-11', '汕汾高速', '1', '10', '217');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('49ca9623f8f77fa30698699ef18f1b18', '2018-03-11', '汕汾高速', '1', '7', '158');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('67e623b14af8ccc410fd25a62ffe524a', '2018-03-11', '汕汾高速', '1', '0', '153');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('4d01bf57a510c5a4881585f5c1d5fab3', '2018-03-11', '汕汾高速', '1', '22', '160');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('13498ab565370c1486b0de994f40e777', '2018-03-11', '汕汾高速', '1', '23', '158');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('50d2d4e1316d4cd2aee58be70bf0213d', '2018-03-11', '汕汾高速', '1', '19', '178');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('18d9144b695f3b912fab67cfd35667f8', '2018-03-11', '汕汾高速', '1', '18', '173');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('f228cd26c8f9e639eef04df56cbdb20f', '2018-03-11', '汕汾高速', '1', '8', '178');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('20d61220beac2219a579c4aaeb8824c2', '2018-03-11', '汕汾高速', '1', '1', '156');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('315c8405a0c5bc5c2bc1cfdd9223603d', '2018-03-11', '汕汾高速', '1', '2', '160');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('71ffde668129a434c24d61de3066680d', '2018-03-11', '汕汾高速', '1', '12', '196');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('40367007695d87f0863a1f8b92b22651', '2018-03-11', '汕汾高速', '1', '6', '150');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('42243740928745b19074dfe3eed94e84', '2018-03-11', '汕汾高速', '1', '14', '235');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('9ca5099e76d63d00eb4d9e3cd1734c2b', '2018-03-11', '汕汾高速', '1', '11', '217');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('9ec490037f921adf57cd922816151fb5', '2018-03-11', '汕汾高速', '1', '5', '143');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('a927744e8eb32e2bae8b59beffe38fad', '2018-03-11', '汕汾高速', '1', '21', '175');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('bb243d622909c8f60d6f0fa79d67b0d6', '2018-03-11', '汕汾高速', '1', '3', '145');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('bd5015c7cd977ec29172cb05438d23e3', '2018-03-11', '汕汾高速', '1', '4', '142');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('be1f13c0a11537cf58204f7709872aeb', '2018-03-11', '汕汾高速', '1', '9', '221');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('c450c5a4242712ba65280f6ae1134a57', '2018-03-11', '汕汾高速', '1', '13', '212');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('d17dd97b5e0e8004ecb43c76405add88', '2018-03-11', '汕汾高速', '1', '16', '213');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('d953c555f4484cdf25f3b44190554f79', '2018-03-11', '汕汾高速', '1', '20', '172');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('e2f38e33f54fffef9f75ab23c343b8d2', '2018-03-11', '汕汾高速', '1', '15', '231');
+INSERT INTO `t_vehicle_highway_flow_real_byhour` (`id`, `date`, `highway`, `in_out_type`, `hour`, `count`) VALUES ('eca54616da39bf2099c447f6c5b76a0a', '2018-03-11', '汕汾高速', '1', '10', '217');
 
 DROP TABLE IF EXISTS `t_vehicle_in_out_count_for_predict`;
 CREATE TABLE `t_vehicle_in_out_count_for_predict` (

@@ -69,7 +69,7 @@
     <!-- 预测-->
     <select id="getlatelyday" parameterType="Map" resultMap="vehicleFlowMap">
         SELECT date,`hour`,in_out_type,highway AS station_id,SUM(count) AS count FROM
-        t_vehicle_in_out_count_real
+        t_vehicle_highway_flow_real_byhour
         WHERE highway =#{highway} AND in_out_type =#{in_out_type} AND date =#{date} GROUP BY date, `hour`, in_out_type,
         highway ORDER BY
         date, HOUR
