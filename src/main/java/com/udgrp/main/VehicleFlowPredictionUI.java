@@ -37,19 +37,19 @@ public class VehicleFlowPredictionUI {
     private static MultiLayerNetwork net;
     private static VehicleFlowSetIterator iterator;
 
-    private static int epochs = 180; // training epochs
+    private static int epochs = 500; // training epochs
     private static int miniBatchSize = 64;// mini-batch size
     private static int exampleLength = 24; // time series length, assume 22 working days per month
     private static int predictLength = 24; // default 1, say, one day ahead prediction
     private static int listenerFrequency = 1;  //
 
     private static String inoutType = "1";  //
-    private static String stationId = "4412-132-21";  //
+    private static String stationId = "汕汾高速";  //
 
     public static void main(String[] args) throws IOException {
         uiServer = UIServer.getInstance();
         initialize(inoutType, stationId);
-        trainModel();
+        //trainModel();
         testModel();
     }
 
@@ -99,15 +99,15 @@ public class VehicleFlowPredictionUI {
     /**
      * 初始化
      *
-     * @param stationId
+     * @param highway
      */
-    private static void initialize(String inoutType, String stationId) {
+    private static void initialize(String inoutType, String highway) {
         log.info("Create dataSet iterator...");
-        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
+        iterator = new VehicleFlowSetIterator(inoutType, highway, miniBatchSize, exampleLength, predictLength);
 
         log.info("Create model path...");
-        String path = "src/main/resources/model/" + stationId + "_" + inoutType + "_model.zip";
-        modelPath = FileUtil.createFile(path);
+        String path = "src/main/resources/model/" + highway + "_" + inoutType + "_model.zip";
+        modelPath = new File(path);
 
         log.info("Build lstm networks...");
         net = LstmNetworks.buildLstmNetworks(iterator.inputColumns(), iterator.totalOutcomes());

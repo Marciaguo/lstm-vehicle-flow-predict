@@ -12,10 +12,6 @@ import java.util.List;
 public class TestDB {
 
     public static void main(String[] args) {
-        //List<String[]> list = DBUtil.readData("", "", "4412-64-19");
-        List<String[]> l = DBUtil.getStationIds();
-        for (String[] arr : l) {
-            System.out.println(arr[0]);
-        }
+
     }
 }

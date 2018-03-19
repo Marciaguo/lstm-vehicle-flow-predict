@@ -5,6 +5,7 @@ import com.udgrp.bean.VehicleFlow;
 import com.udgrp.iterator.VehicleFlowSetIterator;
 import com.udgrp.utils.DBUtil;
 import com.udgrp.utils.DateUtil;
+import com.udgrp.utils.IdUtil;
 import com.udgrp.utils.PlotUtil;
 import javafx.util.Pair;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
@@ -16,7 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 实现循环训练
@@ -35,7 +38,7 @@ public class VehicleFlowPrediction {
     private static MultiLayerNetwork net;
     private static VehicleFlowSetIterator iterator;
 
-    private static int epochs = 1000; // training epochs
+    private static int epochs = 300; // training epochs
     private static int miniBatchSize = 64;// mini-batch size
     private static int exampleLength = 24; // time series length, assume 22 working days per month
     private static int predictLength = 24; //  default 1, say, one day ahead prediction
@@ -43,17 +46,17 @@ public class VehicleFlowPrediction {
 
     public static void main(String[] args) throws IOException {
         String[] inout = {"1"};
-        List<String[]> list = DBUtil.getStationIdLists();
+        List<String> list = DBUtil.getHighWay();
         for (String inoutType : inout) {
-            for (String[] arr : list) {
+            for (String highway : list) {
                 //模型训练阶段
-                initPreTrain(inoutType, arr[0]);
+                initPreTrain(inoutType, highway);
                 trainModel();
-                testModel();
+                testModel(highway);
 
                 //预测数据阶段
-                //initPrePredict(inoutType, arr[0]);
-                //predict();
+                initPrePredict(inoutType, highway);
+                predict();
             }
         }
     }
@@ -79,7 +82,7 @@ public class VehicleFlowPrediction {
     /**
      * 测试
      */
-    private static void testModel() throws IOException {
+    private static void testModel(String highway) throws IOException {
         log.info("Load model...");
         net = ModelSerializer.restoreMultiLayerNetwork(modelPath);
 
@@ -100,52 +103,47 @@ public class VehicleFlowPrediction {
             log.info(predicts[i] + "," + actuals[i]);
         }
         log.info("Plot...");
-        PlotUtil.plot(predicts, actuals, String.valueOf("flow"));
+        PlotUtil.plot(predicts, actuals, highway);
     }
 
     /**
      * 预测
      */
-    private static void predict() throws IOException {
-        log.info("Load model...");
-        net = ModelSerializer.restoreMultiLayerNetwork(modelPath);
-
+    private static void predict() {
         List<VehicleFlow> lastDayDataList = iterator.getPredictDataList();
         List<Pair<INDArray, INDArray>> predictData = iterator.getPredict();
         double max = iterator.getMaxNum();
         double min = iterator.getMinNum();
-
+        log.info("Predictting...");
         INDArray arrs = net.rnnTimeStep(predictData.get(0).getKey());
         INDArray arr = arrs.getColumn(exampleLength - predictLength);
 
-        if (arr.length() != 24) {
-            return;
-        }
-        // System.out.println(arrs);
-        // System.out.println(arr);
         double[] predicts = new double[arr.length()];
+        List<VehicleFlow> vehicleFlows = new ArrayList<>();
         for (int i = 0; i < arr.length(); i++) {
             predicts[i] = arr.getDouble(i) * (max - min) + min;
             VehicleFlow flow = lastDayDataList.get(i);
-            flow.setDate(DateUtil.getAfterDay(flow.getDate()));
-            flow.setFlow(predicts[i]);
-            DBUtil.insert(flow);
-            log.info(predicts[i] + "");
+            flow.setDate(DateUtil.getAfterDay(flow.getDate()));//预测下一天24小时流量
+            flow.setCount(predicts[i]);
+            vehicleFlows.add(flow);
+            //log.info(predicts[i] + "");
         }
+        log.info("Saving the Predicted Result..");
+        DBUtil.batchInsert(vehicleFlows);
     }
 
     /**
      * 初始化
      *
-     * @param stationId
+     * @param highway
      * @return
      */
-    private static void initPreTrain(String inoutType, String stationId) {
+    private static void initPreTrain(String inoutType, String highway) {
         log.info("Create dataSet iterator...");
-        iterator = new VehicleFlowSetIterator(inoutType, stationId, miniBatchSize, exampleLength, predictLength);
+        iterator = new VehicleFlowSetIterator(inoutType, highway, miniBatchSize, exampleLength, predictLength);
 
         log.info("Create model path...");
-        String path = "src/main/resources/model/" + stationId + "_" + inoutType + "_model.zip";
+        String path = "src/main/resources/model/" + highway + "_" + inoutType + "_model.zip";
         modelPath = new File(path);
 
         log.info("Build lstm networks...");
@@ -156,19 +154,18 @@ public class VehicleFlowPrediction {
     /**
      * 初始化
      *
-     * @param stationId
+     * @param highway
      * @return
      */
-    private static void initPrePredict(String inoutType, String stationId) {
+    private static void initPrePredict(String inoutType, String highway) throws IOException {
         log.info("Create model path...");
-        String path = "src/main/resources/model/" + stationId + "_" + inoutType + "_model.zip";
+        String path = "src/main/resources/model/" + highway + "_" + inoutType + "_model.zip";
         modelPath = new File(path);
 
         log.info("Create dataSet iterator...");
-        iterator = new VehicleFlowSetIterator(inoutType, stationId, exampleLength, predictLength);
+        iterator = new VehicleFlowSetIterator(inoutType, highway, exampleLength, predictLength);
 
-        log.info("Build lstm networks...");
-        net = LstmNetworks.buildLstmNetworks(iterator.inputColumns(), iterator.totalOutcomes());
-        net.setListeners(new ScoreIterationListener(printIterations));
+        log.info("Load model...");
+        net = ModelSerializer.restoreMultiLayerNetwork(modelPath);
     }
 }

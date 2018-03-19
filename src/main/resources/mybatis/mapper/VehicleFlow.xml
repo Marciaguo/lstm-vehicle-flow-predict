@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.udgrp.bean.VehicleFlow">
+    <resultMap id="vehicleFlowMap" type="com.udgrp.bean.VehicleFlow">
+        <id column="id" property="id"/>
+        <result column="date" property="date"/>
+        <result column="highway" property="highway"/>
+        <result column="in_out_type" property="in_out_type"/>
+        <result column="hour" property="hour"/>
+        <result column="count" property="count"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT IGNORE INTO t_vehicle_highway_flow_predict_byhour(
+        id,
+        date,
+        highway,
+        in_out_type,
+        hour,
+        count
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.date,jdbcType=VARCHAR},
+            #{item.highway,jdbcType=VARCHAR},
+            #{item.in_out_type,jdbcType=VARCHAR},
+            #{item.hour,jdbcType=VARCHAR},
+            #{item.count,jdbcType=DOUBLE}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.udgrp.bean.VehicleFlow">
+        INSERT IGNORE INTO t_vehicle_highway_flow_predict_byhour(
+        id,
+        date,
+        highway,
+        in_out_type,
+        hour,
+        count
+        )
+        VALUES
+        (
+        #{item.id,jdbcType=VARCHAR},
+        #{item.date,jdbcType=VARCHAR},
+        #{item.highway,jdbcType=VARCHAR},
+        #{item.in_out_type,jdbcType=VARCHAR},
+        #{item.hour,jdbcType=VARCHAR},
+        #{item.count,jdbcType=DOUBLE}
+        )
+    </insert>
+
+    <!-- 训练-->
+    <select id="gettraindata" parameterType="Map" resultMap="vehicleFlowMap">
+        SELECT date,`hour`,in_out_type,highway AS station_id,SUM(count) AS count FROM t_vehicle_in_out_count_for_predict
+        WHERE highway =#{highway} AND in_out_type =#{in_out_type} GROUP BY date, `hour`, in_out_type, highway ORDER BY
+        date, HOUR
+    </select>
+    <!-- 测试-->
+    <select id="gettestdata" parameterType="Map" resultMap="vehicleFlowMap">
+        SELECT date,`hour`,in_out_type,highway AS station_id,SUM(count) AS count FROM
+        t_vehicle_in_out_count_for_predict_test
+        WHERE highway =#{highway} AND in_out_type =#{in_out_type} GROUP BY date, `hour`, in_out_type, highway ORDER BY
+        date, HOUR
+    </select>
+    <!-- 预测-->
+    <select id="getlatelyday" parameterType="Map" resultMap="vehicleFlowMap">
+        SELECT date,`hour`,in_out_type,highway AS station_id,SUM(count) AS count FROM
+        t_vehicle_in_out_count_real
+        WHERE highway =#{highway} AND in_out_type =#{in_out_type} AND date =#{date} GROUP BY date, `hour`, in_out_type,
+        highway ORDER BY
+        date, HOUR
+    </select>
+</mapper>

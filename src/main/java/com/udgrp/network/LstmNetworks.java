@@ -23,7 +23,7 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
  */
 public class LstmNetworks {
 
-    private static final double learningRate = 0.0024;
+    private static final double learningRate = 0.0032;
     private static final int iterations = 1;
     private static final int seed = 12345;
 

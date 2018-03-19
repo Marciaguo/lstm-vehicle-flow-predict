@@ -3,7 +3,7 @@
 <configuration scan="true" scanPeriod="30 minutes">
 
     <property name="logback.home" value="/home/hdfs/ud-jtt"/>
-    <property name="logback.appName" value="ud-vehicle-flow-predict"/>
+    <property name="logback.appName" value="ud-vehicle-count-predict"/>
     <property name="logback.debug" value="debug"/>
     <property name="logback.info" value="info"/>
     <property name="logback.err" value="err"/>
@@ -169,14 +169,6 @@
         <appender-ref ref="union_err"/>
     </logger>
     <logger name="org.deeplearning4j.ui.play.PlayUIServer" level="info" additivity="true">
-        <!--<appender-ref ref="CONSOLE"/>-->
-        <appender-ref ref="union_info"/>
-        <appender-ref ref="union_warn"/>
-        <appender-ref ref="union_debug"/>
-        <appender-ref ref="union_err"/>
-    </logger>
-
-    <logger name="org" level="error" additivity="true">
         <!--<appender-ref ref="CONSOLE"/>-->
         <appender-ref ref="union_info"/>
         <appender-ref ref="union_warn"/>

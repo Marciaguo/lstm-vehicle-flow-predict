@@ -5,60 +5,70 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author kejw
  * @version V1.0
- * @Project ud-spring-flow-predict
+ * @Project ud-spring-count-predict
  * @Description: TODO
  * @date 2018/1/29
  */
 public class VehicleFlow implements Comparable<VehicleFlow> {
-
-    //站点
-    private String stationId;
+    //id
+    private String id;
     //日期
     private String date;
+    //道路
+    private String highway;
     //进出口
-    private String inOutType;
+    private String in_out_type;
     //小时
     private int hour;
     //车流量
-    private double flow;
+    private double count;
 
     public VehicleFlow() {
     }
 
-    public VehicleFlow(double flow) {
-        this.flow = flow;
+    public VehicleFlow(double count) {
+        this.count = count;
     }
 
-    public VehicleFlow(String inOutType, String stationId, String date, int hour, double flow) {
-        this.inOutType = inOutType;
-        this.stationId = stationId;
+    public VehicleFlow(String id, String date, String highway, String in_out_type, int hour, double count) {
+        this.id = id;
         this.date = date;
+        this.highway = highway;
+        this.in_out_type = in_out_type;
         this.hour = hour;
-        this.flow = flow;
+        this.count = count;
     }
 
-    public String getInOutType() {
-        return inOutType;
+    public String getId() {
+        return id;
     }
 
-    public void setInOutType(String inOutType) {
-        this.inOutType = inOutType;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public double getFlow() {
-        return flow;
+    public String getIn_out_type() {
+        return in_out_type;
     }
 
-    public void setFlow(double flow) {
-        this.flow = flow;
+    public void setIn_out_type(String in_out_type) {
+        this.in_out_type = in_out_type;
     }
 
-    public String getStationId() {
-        return stationId;
+    public double getCount() {
+        return count;
     }
 
-    public void setStationId(String stationId) {
-        this.stationId = stationId;
+    public void setCount(double count) {
+        this.count = count;
+    }
+
+    public String getHighway() {
+        return highway;
+    }
+
+    public void setHighway(String highway) {
+        this.highway = highway;
     }
 
     public String getDate() {
